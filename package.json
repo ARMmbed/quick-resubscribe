@@ -1,0 +1,17 @@
+{
+  "name": "example-connector-subscribe",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jan Jongboom <jan.jongboom@arm.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "co": "^4.6.0",
+    "es6-promisify": "^4.1.0",
+    "mbed-connector-api": "git://github.com/ARMmbed/mbed-connector-api-node.git#63938afe1dbb4127e847d47007f8311b8bc3e06f"
+  }
+}
