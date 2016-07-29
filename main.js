@@ -24,6 +24,18 @@ function getEndpoints(type) {
   });
 }
 
+function putResource(endpoint, r) {
+  return new Promise((res, rej) => {
+    api.putResourceSubscription(endpoint, r, function(err) {
+      console.log('subscribed', endpoint, r);
+      if (err) return rej(err);
+      setTimeout(() => {
+        res();
+      }, 1500);
+    });
+  });
+}
+
 co.wrap(function*() {
   try {
     console.log('gonna put Callback now...');
@@ -52,18 +64,10 @@ co.wrap(function*() {
       return co.wrap(function*() {
         try {
 
-          yield Promise.all(resources.map(r => {
-            return new Promise((res, rej) => {
-              console.log('subscribing', endpoint, r);
-              api.putResourceSubscription(endpoint, r, function(err) {
-                console.log('subscribed', endpoint, r);
-                if (err) return rej(err);
-                setTimeout(() => {
-                  res();
-                }, 1500);
-              });
-            });
-          }));
+          for (let r of resources) {
+            console.log('subscribing', endpoint, r);
+            yield putResource(endpoint, r);
+          }
         }
         catch (ex) {
           console.error('Error...', ex.toString());
