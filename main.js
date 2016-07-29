@@ -24,7 +24,6 @@ function getEndpoints(type) {
   });
 }
 
-
 co.wrap(function*() {
   try {
     console.log('gonna put Callback now...');
@@ -51,11 +50,23 @@ co.wrap(function*() {
       let endpoint = endpoints[rix].name;
 
       return co.wrap(function*() {
-        for (let res of resources) {
-          console.log(endpoint, 'subscribing to', res);
-          yield promisify(api.putResourceSubscription.bind(api))(endpoint, res);
-          console.log(endpoint, 'subscribed to', res);
-          yield wait(100);
+        try {
+
+          yield Promise.all(resources.map(r => {
+            return new Promise((res, rej) => {
+              console.log('subscribing', endpoint, r);
+              api.putResourceSubscription(endpoint, r, function(err) {
+                console.log('subscribed', endpoint, r);
+                if (err) return rej(err);
+                setTimeout(() => {
+                  res();
+                }, 1500);
+              });
+            });
+          }));
+        }
+        catch (ex) {
+          console.error('Error...', ex.toString());
         }
       })();
     }));
