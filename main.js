@@ -80,6 +80,8 @@ co.wrap(function*() {
     console.log('putCallback OK');
 
     console.log('Done');
+
+    process.exit(1);
   }
   catch (ex) {
     console.error('Oh noes...', ex);
