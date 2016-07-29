@@ -38,11 +38,9 @@ function putResource(endpoint, r) {
 
 co.wrap(function*() {
   try {
-    console.log('gonna put Callback now...');
+    yield promisify(api.startLongPolling.bind(api))();
 
-    yield promisify(api.putCallback.bind(api))({ url: 'http://213.30.161.139/armRestDC-1.0/rest/processNotifications' });
-
-    console.log('putCallback OK');
+    console.log('Started long polling');
 
     var endpoints = yield getEndpoints();
     endpoints = endpoints.filter(e => e.type.indexOf('MACHINE') === 0);
@@ -74,6 +72,12 @@ co.wrap(function*() {
         }
       })();
     }));
+
+    console.log('gonna put Callback now...');
+
+    yield promisify(api.putCallback.bind(api))({ url: 'http://213.30.161.139/armRestDC-1.0/rest/processNotifications' });
+
+    console.log('putCallback OK');
 
     console.log('Done');
   }
