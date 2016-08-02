@@ -31,7 +31,7 @@ function putResource(endpoint, r) {
       if (err) return rej(err);
       setTimeout(() => {
         res();
-      }, 1500);
+      }, 100);
     });
   });
 }
