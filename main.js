@@ -27,11 +27,12 @@ function getEndpoints(type) {
 function putResource(endpoint, r) {
   return new Promise((res, rej) => {
     api.putResourceSubscription(endpoint, r, function(err) {
+      if (err) console.error('subscribe error', endpoint, r, err);
       console.log('subscribed', endpoint, r);
       if (err) return rej(err);
       setTimeout(() => {
         res();
-      }, 100);
+      }, 1500);
     });
   });
 }
