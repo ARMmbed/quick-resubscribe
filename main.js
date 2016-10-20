@@ -76,10 +76,10 @@ co.wrap(function*() {
           yield promisify(api.postResource.bind(api))(endpoint, '/report/0/interval', '0');
           console.log('set report interval to 10', endpoint);
 
-          console.log('setting ultrasonic interval to 1', endpoint);
+          console.log('setting ultrasonic interval to 10', endpoint);
           if (endpoint.indexOf('d6') === 0) {
-            yield promisify(api.postResource.bind(api))(endpoint, '/ultrasonic/0/5701', '0');
-            console.log('set ultrasonic interval to 1', endpoint);
+            yield promisify(api.postResource.bind(api))(endpoint, '/ultrasonic/0/5701', '10');
+            console.log('set ultrasonic interval to 10', endpoint);
           }
         }
         catch (ex) {
