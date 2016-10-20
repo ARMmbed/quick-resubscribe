@@ -41,6 +41,10 @@ co.wrap(function*() {
   try {
     yield promisify(api.startLongPolling.bind(api))();
 
+    api.on('notification', (e) => {
+      console.log('notification', e);
+    });
+
     console.log('Started long polling');
 
     var endpoints = yield getEndpoints();
@@ -69,12 +73,12 @@ co.wrap(function*() {
           }
 
           console.log('setting report interval to 10', endpoint);
-          yield promisify(api.postResource.bind(api))(endpoint, '/report/0/interval', '10');
+          yield promisify(api.postResource.bind(api))(endpoint, '/report/0/interval', '0');
           console.log('set report interval to 10', endpoint);
 
           console.log('setting ultrasonic interval to 1', endpoint);
           if (endpoint.indexOf('d6') === 0) {
-            yield promisify(api.postResource.bind(api))(endpoint, '/ultrasonic/0/5701', '1');
+            yield promisify(api.postResource.bind(api))(endpoint, '/ultrasonic/0/5701', '0');
             console.log('set ultrasonic interval to 1', endpoint);
           }
         }
